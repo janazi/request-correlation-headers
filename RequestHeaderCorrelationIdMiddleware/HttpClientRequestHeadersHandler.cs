@@ -41,6 +41,7 @@ namespace CorrelationIdRequestHeader
         public static void PropagateCorrelationIdHeader(this IServiceCollection services)
         {
             services.AddHttpContextAccessor();
+            services.AddScoped<HttpClientRequestHeadersHandler>();
             services.ConfigureAll<HttpClientFactoryOptions>(options =>
             {
                 options.HttpMessageHandlerBuilderActions.Add(builder =>
