@@ -3,20 +3,12 @@
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
 		<PackageId>RequestHeaderCorrelationIdMiddleware</PackageId>
-		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<AssemblyVersion>1.0.3.2</AssemblyVersion>
 		<Version>1.0.3.2</Version>
 		<Authors>Janazi</Authors>
 		<Company>WePets</Company>
 		<PackageDescription>Add an x-correlation-id to the requests, if it not exists</PackageDescription>
 		<RepositoryUrl>https://github.com/janazi/request-correlation-headers</RepositoryUrl>
-	</PropertyGroup>
-	<PropertyGroup Condition="$(Configuration) == 'Debug'">
-		<BumpLabel>dev</BumpLabel>
-		<BumpLabelDigits>4</BumpLabelDigits>
-	</PropertyGroup>
-	<PropertyGroup Condition="$(Configuration) == 'Release'">
-		<BumpRevision>True</BumpRevision>
-		<BumpResetLabel>dev</BumpResetLabel>
 	</PropertyGroup>
 
 	<ItemGroup>
