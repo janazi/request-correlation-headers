@@ -4,7 +4,7 @@
 		<TargetFramework>net5.0</TargetFramework>
 		<PackageId>RequestHeaderCorrelationIdMiddleware</PackageId>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
-		<Version>1.0.3.1</Version>
+		<Version>1.0.3.2</Version>
 		<Authors>Janazi</Authors>
 		<Company>WePets</Company>
 		<PackageDescription>Add an x-correlation-id to the requests, if it not exists</PackageDescription>
@@ -20,7 +20,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Ivy.Versioning" Version="3.1.0">
+		<PackageReference Include="GitVersion.MsBuild" Version="5.6.10">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>

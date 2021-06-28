@@ -5,7 +5,7 @@ using Microsoft.Extensions.Primitives;
 using System;
 using System.Threading.Tasks;
 
-namespace CorrelationIdRequestHeader
+namespace RequestHeaderCorrelationId
 {
     public class RequestHeaderCorrelationIdMiddleware
     {
