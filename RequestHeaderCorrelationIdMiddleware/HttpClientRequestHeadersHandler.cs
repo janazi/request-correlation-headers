@@ -19,8 +19,11 @@ namespace RequestHeaderCorrelationId
         }
 
         private const string CORRELATION_TOKEN_HEADER = "x-correlation-id";
+        private const string FROM_HEADER = "from";
+        private const string ApplicationNameEnvironment = "ApplicationName";
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly ILogger<HttpClientRequestHeadersHandler> logger;
+        private static string ApplicationName => Environment.GetEnvironmentVariable(ApplicationNameEnvironment);
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
@@ -34,6 +37,7 @@ namespace RequestHeaderCorrelationId
 
             logger.LogInformation($"SendAsync > Using existent id {correlationId}");
             request.Headers.Add(CORRELATION_TOKEN_HEADER, correlationId.ToString());
+            request.Headers.Add(FROM_HEADER, ApplicationName);
             return base.SendAsync(request, cancellationToken);
         }
     }
