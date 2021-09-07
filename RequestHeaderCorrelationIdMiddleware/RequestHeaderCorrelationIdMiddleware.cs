@@ -5,7 +5,7 @@ using Microsoft.Extensions.Primitives;
 using System;
 using System.Threading.Tasks;
 
-namespace CorrelationIdRequestHeader
+namespace RequestHeaderCorrelationIdMiddleware
 {
     public class RequestHeaderCorrelationIdMiddleware
     {
@@ -13,18 +13,18 @@ namespace CorrelationIdRequestHeader
         {
             Next = next;
         }
-        private const string CORRELATION_TOKEN_HEADER = "x-correlation-id";
+        private const string CorrelationTokenHeader = "x-correlation-id";
         public RequestDelegate Next { get; }
         public ILogger<RequestHeaderCorrelationIdMiddleware> Logger { get; }
 
 
         public async Task InvokeAsync(HttpContext context)
         {
-            if (!(!StringValues.IsNullOrEmpty(context.Request.Headers[CORRELATION_TOKEN_HEADER])
-                && Guid.TryParse(context.Request.Headers[CORRELATION_TOKEN_HEADER], out Guid correlationId)))
+            if (!(!StringValues.IsNullOrEmpty(context.Request.Headers[CorrelationTokenHeader])
+                && Guid.TryParse(context.Request.Headers[CorrelationTokenHeader], out Guid correlationId)))
             {
                 correlationId = Guid.NewGuid();
-                context.Request.Headers.Add(CORRELATION_TOKEN_HEADER, correlationId.ToString());
+                context.Request.Headers.Add(CorrelationTokenHeader, correlationId.ToString());
             }
 
             await Next(context);

@@ -7,25 +7,25 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CorrelationIdRequestHeader
+namespace RequestHeaderCorrelationIdMiddleware
 {
     public class HttpClientRequestHeadersHandler : DelegatingHandler
     {
         public HttpClientRequestHeadersHandler(IHttpContextAccessor httpContextAccessor)
         {
-            this.httpContextAccessor = httpContextAccessor;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        private const string CORRELATION_TOKEN_HEADER = "x-correlation-id";
-        private readonly IHttpContextAccessor httpContextAccessor;
+        private const string CorrelationTokenHeader = "x-correlation-id";
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if (!(!StringValues.IsNullOrEmpty(httpContextAccessor.HttpContext.Request.Headers[CORRELATION_TOKEN_HEADER])
-                && Guid.TryParse(httpContextAccessor.HttpContext.Request.Headers[CORRELATION_TOKEN_HEADER], out Guid correlationId)))
+            if (!(!StringValues.IsNullOrEmpty(_httpContextAccessor.HttpContext.Request.Headers[CorrelationTokenHeader])
+                && Guid.TryParse(_httpContextAccessor.HttpContext.Request.Headers[CorrelationTokenHeader], out Guid correlationId)))
             {
                 correlationId = Guid.NewGuid();
-                request.Headers.TryAddWithoutValidation(CORRELATION_TOKEN_HEADER, correlationId.ToString());
+                request.Headers.TryAddWithoutValidation(CorrelationTokenHeader, correlationId.ToString());
             }
 
             return base.SendAsync(request, cancellationToken);

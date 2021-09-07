@@ -1,7 +1,7 @@
-﻿using CorrelationIdRequestHeader;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Moq;
 using Moq.Protected;
+using RequestHeaderCorrelationIdMiddleware;
 using System;
 using System.Linq;
 using System.Net.Http;
@@ -13,7 +13,7 @@ namespace RequestHeaderCorrelationIdTests
 {
     public class HttpClientRequestHeaderTests
     {
-        private const string CORRELATION_TOKEN_HEADER = "x-correlation-id";
+        private const string CorrelationTokenHeader = "x-correlation-id";
         [Fact]
         public async void ShouldCreate_CorrelationId()
         {
@@ -35,8 +35,8 @@ namespace RequestHeaderCorrelationIdTests
             var invoker = new HttpMessageInvoker(handler);
             var result = await invoker.SendAsync(request, default);
 
-            Assert.NotNull(request.Headers.GetValues(CORRELATION_TOKEN_HEADER));
-            var correlationId = Guid.Parse(request.Headers.GetValues(CORRELATION_TOKEN_HEADER).First());
+            Assert.NotNull(request.Headers.GetValues(CorrelationTokenHeader));
+            var correlationId = Guid.Parse(request.Headers.GetValues(CorrelationTokenHeader).First());
             Assert.IsType<Guid>(correlationId);
         }
 
@@ -50,7 +50,7 @@ namespace RequestHeaderCorrelationIdTests
             var mockHttpContextAccessor = new Mock<IHttpContextAccessor>();
             var context = new DefaultHttpContext();
             mockHttpContextAccessor.Setup(_ => _.HttpContext).Returns(context);
-            context.Request.Headers.Add(CORRELATION_TOKEN_HEADER, correlationId);
+            context.Request.Headers.Add(CorrelationTokenHeader, correlationId);
 
             innerHandlerMock.Protected()
                 .Setup<Task<HttpResponseMessage>>("SendAsync", request, ItExpr.IsAny<CancellationToken>())
@@ -63,7 +63,7 @@ namespace RequestHeaderCorrelationIdTests
 
             var invoker = new HttpMessageInvoker(handler);
             var result = await invoker.SendAsync(request, default);
-            var correlationIdReturned = context.Request.Headers[CORRELATION_TOKEN_HEADER];
+            var correlationIdReturned = context.Request.Headers[CorrelationTokenHeader];
             Assert.Equal(correlationId, correlationIdReturned);
         }
     }

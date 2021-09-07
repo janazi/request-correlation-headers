@@ -1,4 +1,3 @@
-using CorrelationIdRequestHeader;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Moq;
@@ -7,11 +6,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace CorrelationIdRequestHeaderTests
+namespace RequestHeaderCorrelationIdTests
 {
     public class CorrelationMiddlewareTests
     {
-        private const string CORRELATION_TOKEN_HEADER = "x-correlation-id";
+        private const string CorrelationTokenHeader = "x-correlation-id";
         [Fact]
         public async Task CheckIfExistsCorrelationId_WhenHeadersContainXCorrelationId()
         {
@@ -29,12 +28,12 @@ namespace CorrelationIdRequestHeaderTests
             var requestDelegate = new RequestDelegate((innerContext) => Task.FromResult(0));
 
             //ACT
-            var middleware = new RequestHeaderCorrelationIdMiddleware(requestDelegate);
+            var middleware = new RequestHeaderCorrelationIdMiddleware.RequestHeaderCorrelationIdMiddleware(requestDelegate);
             await middleware.InvokeAsync(httpContext);
 
             //ASSERT
-            Assert.False(StringValues.IsNullOrEmpty(httpContext.Request.Headers[CORRELATION_TOKEN_HEADER]));
-            Assert.Equal(guid, httpContext.Request.Headers[CORRELATION_TOKEN_HEADER].ToString());
+            Assert.False(StringValues.IsNullOrEmpty(httpContext.Request.Headers[CorrelationTokenHeader]));
+            Assert.Equal(guid, httpContext.Request.Headers[CorrelationTokenHeader].ToString());
         }
 
         [Fact]
@@ -51,11 +50,11 @@ namespace CorrelationIdRequestHeaderTests
             var requestDelegate = new RequestDelegate((innerContext) => Task.FromResult(0));
 
             //ACT
-            var middleware = new RequestHeaderCorrelationIdMiddleware(requestDelegate);
+            var middleware = new RequestHeaderCorrelationIdMiddleware.RequestHeaderCorrelationIdMiddleware(requestDelegate);
             await middleware.InvokeAsync(httpContext);
 
             //ASSERT
-            Assert.False(StringValues.IsNullOrEmpty(httpContext.Request.Headers[CORRELATION_TOKEN_HEADER]));
+            Assert.False(StringValues.IsNullOrEmpty(httpContext.Request.Headers[CorrelationTokenHeader]));
         }
     }
 }
