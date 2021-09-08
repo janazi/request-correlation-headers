@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Moq;
+using RequestHeaderCorrelationId;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using Xunit;
 
 namespace RequestHeaderCorrelationIdTests
 {
-    public class CorrelationMiddlewareTests
+    public class RequestHeaderCorrelationIdMiddlewareTests
     {
         private const string CorrelationTokenHeader = "x-correlation-id";
         [Fact]

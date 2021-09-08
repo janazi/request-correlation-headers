@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestHeaderCorrelationIdMiddleware", "RequestHeaderCorrelationIdMiddleware\RequestHeaderCorrelationIdMiddleware.csproj", "{0957FC11-120E-4362-97F3-062832B609B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestHeaderCorrelationId", "RequestHeaderCorrelationIdMiddleware\RequestHeaderCorrelationId.csproj", "{0957FC11-120E-4362-97F3-062832B609B4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B6CB53E7-1628-4F0C-B42A-171CBF078589}"
 EndProject
