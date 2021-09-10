@@ -18,26 +18,27 @@ namespace RequestHeaderCorrelationId
             this.logger = logger;
         }
 
-        private const string CORRELATION_TOKEN_HEADER = "x-correlation-id";
-        private const string FROM_HEADER = "from";
+        private const string CorrelationIdHeader = "x-correlation-id";
+        private const string UserAgentHeader = "User-Agent";
         private const string ApplicationNameEnvironment = "ApplicationName";
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly ILogger<HttpClientRequestHeadersHandler> logger;
-        private static string ApplicationName => Environment.GetEnvironmentVariable(ApplicationNameEnvironment);
+        private static string ApplicationName => Environment.GetEnvironmentVariable(ApplicationNameEnvironment) ??
+            Environment.MachineName;
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             logger.LogInformation("SendAsync");
-            if (!(!StringValues.IsNullOrEmpty(httpContextAccessor.HttpContext.Request.Headers[CORRELATION_TOKEN_HEADER])
-                && Guid.TryParse(httpContextAccessor.HttpContext.Request.Headers[CORRELATION_TOKEN_HEADER], out Guid correlationId)))
+            if (!(!StringValues.IsNullOrEmpty(httpContextAccessor.HttpContext.Request.Headers[CorrelationIdHeader])
+                && Guid.TryParse(httpContextAccessor.HttpContext.Request.Headers[CorrelationIdHeader], out Guid correlationId)))
             {
                 correlationId = Guid.NewGuid();
                 logger.LogInformation($"SendAsync > Generating new id {correlationId}");
             }
 
             logger.LogInformation($"SendAsync > Using existent id {correlationId}");
-            request.Headers.Add(CORRELATION_TOKEN_HEADER, correlationId.ToString());
-            request.Headers.Add(FROM_HEADER, ApplicationName);
+            request.Headers.Add(CorrelationIdHeader, correlationId.ToString());
+            request.Headers.Add(UserAgentHeader, ApplicationName);
             return base.SendAsync(request, cancellationToken);
         }
     }
