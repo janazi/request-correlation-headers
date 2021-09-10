@@ -3,8 +3,8 @@
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
 		<PackageId>RequestHeaderCorrelationIdMiddleware</PackageId>
-		<AssemblyVersion>1.0.3.2</AssemblyVersion>
-		<Version>1.0.3.2</Version>
+		<AssemblyVersion>1.0.6</AssemblyVersion>
+		<Version>1.0.6</Version>
 		<Authors>Janazi</Authors>
 		<Company>WePets</Company>
 		<PackageDescription>Add an x-correlation-id to the requests, if it not exists</PackageDescription>
