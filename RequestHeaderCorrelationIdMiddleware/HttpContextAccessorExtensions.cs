@@ -11,9 +11,7 @@ namespace RequestHeaderCorrelationId
         {
             if (!(!StringValues.IsNullOrEmpty(httpContextAccessor.HttpContext.Request.Headers.ContainsKey(Correlation_Token_Header).ToString())
                 && Guid.TryParse(httpContextAccessor.HttpContext.Request.Headers[Correlation_Token_Header], out Guid correlationId)))
-            {
                 return null;
-            }
 
             return correlationId;
         }

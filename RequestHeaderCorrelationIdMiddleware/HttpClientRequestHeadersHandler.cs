@@ -1,37 +1,36 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Http;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RequestHeaderCorrelationIdMiddleware
+namespace RequestHeaderCorrelationId
 {
     public class HttpClientRequestHeadersHandler : DelegatingHandler
     {
-        public HttpClientRequestHeadersHandler(IHttpContextAccessor httpContextAccessor, ILogger<HttpClientRequestHeadersHandler> logger)
+        public HttpClientRequestHeadersHandler(IHttpContextAccessor httpContextAccessor)
         {
-            _httpContextAccessor = httpContextAccessor;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
-        private const string CorrelationTokenHeader = "x-correlation-id";
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly ILogger<HttpClientRequestHeadersHandler> logger;
-        private static string ApplicationName => Environment.GetEnvironmentVariable(ApplicationNameEnvironment);
+        private const string CorrelationIdHeader = "x-correlation-id";
+        private const string UserAgentHeader = "User-Agent";
+        private const string ApplicationNameEnvironment = "ApplicationName";
+        private readonly IHttpContextAccessor httpContextAccessor;
+        private static string ApplicationName => Environment.GetEnvironmentVariable(ApplicationNameEnvironment) ??
+            Environment.MachineName;
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if (!(!StringValues.IsNullOrEmpty(_httpContextAccessor.HttpContext.Request.Headers[CorrelationTokenHeader])
-                && Guid.TryParse(_httpContextAccessor.HttpContext.Request.Headers[CorrelationTokenHeader], out Guid correlationId)))
-            {
+            if (!(!StringValues.IsNullOrEmpty(httpContextAccessor.HttpContext.Request.Headers[CorrelationIdHeader])
+                && Guid.TryParse(httpContextAccessor.HttpContext.Request.Headers[CorrelationIdHeader], out Guid correlationId)))
                 correlationId = Guid.NewGuid();
-                request.Headers.TryAddWithoutValidation(CORRELATION_TOKEN_HEADER, correlationId.ToString());
-            }
-            request.Headers.Add(CORRELATION_TOKEN_HEADER, correlationId.ToString());
-            request.Headers.Add(FROM_HEADER, ApplicationName);
+
+            request.Headers.Add(CorrelationIdHeader, correlationId.ToString());
+            request.Headers.Add(UserAgentHeader, ApplicationName);
             return base.SendAsync(request, cancellationToken);
         }
     }

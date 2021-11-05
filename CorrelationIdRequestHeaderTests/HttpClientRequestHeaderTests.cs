@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using Moq;
 using Moq.Protected;
 using RequestHeaderCorrelationIdMiddleware;
@@ -28,8 +27,7 @@ namespace RequestHeaderCorrelationIdTests
                 .Setup<Task<HttpResponseMessage>>("SendAsync", request, ItExpr.IsAny<CancellationToken>())
                 .ReturnsAsync(new HttpResponseMessage(System.Net.HttpStatusCode.OK) { });
 
-            var mockLogger = new Mock<ILogger<HttpClientRequestHeadersHandler>>();
-            var handler = new HttpClientRequestHeadersHandler(mockHttpContextAccessor.Object, mockLogger.Object)
+            var handler = new HttpClientRequestHeadersHandler(mockHttpContextAccessor.Object)
             {
                 InnerHandler = innerHandlerMock.Object
             };
@@ -58,10 +56,7 @@ namespace RequestHeaderCorrelationIdTests
                 .Setup<Task<HttpResponseMessage>>("SendAsync", request, ItExpr.IsAny<CancellationToken>())
                 .ReturnsAsync(new HttpResponseMessage(System.Net.HttpStatusCode.OK) { });
 
-
-            var mockLogger = new Mock<ILogger<HttpClientRequestHeadersHandler>>();
-
-            var handler = new HttpClientRequestHeadersHandler(mockHttpContextAccessor.Object, mockLogger.Object)
+            var handler = new HttpClientRequestHeadersHandler(mockHttpContextAccessor.Object)
             {
                 InnerHandler = innerHandlerMock.Object
             };
