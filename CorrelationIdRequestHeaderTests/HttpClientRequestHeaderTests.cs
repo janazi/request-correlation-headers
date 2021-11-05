@@ -1,22 +1,31 @@
-﻿using Microsoft.AspNetCore.Http;
-using Moq;
-using Moq.Protected;
-using RequestHeaderCorrelationIdMiddleware;
-using System;
+﻿using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Jnz.RequestHeaderCorrelationId;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using Moq;
+using Moq.Protected;
 using Xunit;
 
-namespace RequestHeaderCorrelationIdTests
+namespace Jnz.RequestHeaderCorrelationIdTests
 {
     public class HttpClientRequestHeaderTests
     {
         private const string CorrelationTokenHeader = "x-correlation-id";
+        private const string ApplicationNameEnvironment = "ApplicationName";
+
+        public HttpClientRequestHeaderTests()
+        {
+            Environment.SetEnvironmentVariable(ApplicationNameEnvironment, "Tests");
+        }
+
         [Fact]
         public async void ShouldCreate_CorrelationId()
         {
+            Environment.SetEnvironmentVariable(ApplicationNameEnvironment, "Tests");
             var request = new HttpRequestMessage();
             var innerHandlerMock = new Mock<DelegatingHandler>();
             var mockHttpContextAccessor = new Mock<IHttpContextAccessor>();

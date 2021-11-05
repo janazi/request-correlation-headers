@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
-using System;
 
-namespace RequestHeaderCorrelationId
+namespace Jnz.RequestHeaderCorrelationId
 {
     public static class HttpContextAccessorExtensions
     {

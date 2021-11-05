@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
-using System;
-using System.Threading.Tasks;
 
-namespace RequestHeaderCorrelationIdMiddleware
+namespace Jnz.RequestHeaderCorrelationId
 {
     public class RequestHeaderCorrelationIdMiddleware
     {

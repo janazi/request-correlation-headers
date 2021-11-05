@@ -1,13 +1,13 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
-using Moq;
-using RequestHeaderCorrelationId;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Jnz.RequestHeaderCorrelationId;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
+using Moq;
 using Xunit;
 
-namespace RequestHeaderCorrelationIdTests
+namespace Jnz.RequestHeaderCorrelationIdTests
 {
     public class RequestHeaderCorrelationIdMiddlewareTests
     {
@@ -29,7 +29,7 @@ namespace RequestHeaderCorrelationIdTests
             var requestDelegate = new RequestDelegate((innerContext) => Task.FromResult(0));
 
             //ACT
-            var middleware = new RequestHeaderCorrelationIdMiddleware.RequestHeaderCorrelationIdMiddleware(requestDelegate);
+            var middleware = new RequestHeaderCorrelationIdMiddleware(requestDelegate);
             await middleware.InvokeAsync(httpContext);
 
             //ASSERT
@@ -51,7 +51,7 @@ namespace RequestHeaderCorrelationIdTests
             var requestDelegate = new RequestDelegate((innerContext) => Task.FromResult(0));
 
             //ACT
-            var middleware = new RequestHeaderCorrelationIdMiddleware.RequestHeaderCorrelationIdMiddleware(requestDelegate);
+            var middleware = new RequestHeaderCorrelationIdMiddleware(requestDelegate);
             await middleware.InvokeAsync(httpContext);
 
             //ASSERT

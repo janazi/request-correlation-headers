@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using Jnz.RequestHeaderCorrelationId;
+using Microsoft.AspNetCore.Http;
 using Moq;
-using RequestHeaderCorrelationId;
-using System;
 using Xunit;
 
-namespace RequestHeaderCorrelationIdTests
+namespace Jnz.RequestHeaderCorrelationIdTests
 {
     public class HttpContextAccessorExtensionsTests
     {

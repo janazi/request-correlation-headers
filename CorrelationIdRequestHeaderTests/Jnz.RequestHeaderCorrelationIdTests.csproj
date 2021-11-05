@@ -24,7 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RequestHeaderCorrelationIdMiddleware\RequestHeaderCorrelationId.csproj" />
+    <ProjectReference Include="..\RequestHeaderCorrelationIdMiddleware\Jnz.RequestHeaderCorrelationId.csproj" />
+    <ProjectReference Include="..\RequestHeaderCorrelationIdMiddleware\Jnz.RequestHeaderCorrelationId.csproj" />
   </ItemGroup>
 
 </Project>
