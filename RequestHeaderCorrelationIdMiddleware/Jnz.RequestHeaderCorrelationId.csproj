@@ -5,7 +5,7 @@
     <LangVersion>latest</LangVersion>
 		<PackageId>Jnz.CorrelationHeaderMiddleware</PackageId>
 		<AssemblyVersion>1.0.6</AssemblyVersion>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<Authors>Janazi</Authors>
 		<Company>WePets</Company>
 		<PackageDescription>Add an x-correlation-id to the requests, if it not exists</PackageDescription>
