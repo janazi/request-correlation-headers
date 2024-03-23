@@ -17,7 +17,7 @@ namespace Jnz.RequestHeaderCorrelationIdTests
             var mockHttpContextAccessor = new Mock<IHttpContextAccessor>();
             var context = new DefaultHttpContext();
             mockHttpContextAccessor.Setup(_ => _.HttpContext).Returns(context);
-            context.Request.Headers.Add(CORRELATION_TOKEN_HEADER, correlationId);
+            context.Request.Headers.Append(CORRELATION_TOKEN_HEADER, correlationId);
 
             var guidFromHeader = mockHttpContextAccessor.Object.GetCorrelationId();
 

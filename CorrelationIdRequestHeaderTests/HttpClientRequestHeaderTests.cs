@@ -59,7 +59,7 @@ namespace Jnz.RequestHeaderCorrelationIdTests
             var mockHttpContextAccessor = new Mock<IHttpContextAccessor>();
             var context = new DefaultHttpContext();
             mockHttpContextAccessor.Setup(_ => _.HttpContext).Returns(context);
-            context.Request.Headers.Add(CorrelationTokenHeader, correlationId);
+            context.Request.Headers.Append(CorrelationTokenHeader, correlationId);
 
             innerHandlerMock.Protected()
                 .Setup<Task<HttpResponseMessage>>("SendAsync", request, ItExpr.IsAny<CancellationToken>())

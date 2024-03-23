@@ -26,7 +26,7 @@ namespace Jnz.RequestHeaderCorrelationIdTests
 
             var httpContext = httpContextMoq.Object;
 
-            var requestDelegate = new RequestDelegate((innerContext) => Task.FromResult(0));
+            var requestDelegate = new RequestDelegate((innerContext) => Task.CompletedTask);
 
             //ACT
             var middleware = new RequestHeaderCorrelationIdMiddleware(requestDelegate);
@@ -48,7 +48,7 @@ namespace Jnz.RequestHeaderCorrelationIdTests
 
             var httpContext = httpContextMoq.Object;
 
-            var requestDelegate = new RequestDelegate((innerContext) => Task.FromResult(0));
+            var requestDelegate = new RequestDelegate((innerContext) => Task.CompletedTask);
 
             //ACT
             var middleware = new RequestHeaderCorrelationIdMiddleware(requestDelegate);

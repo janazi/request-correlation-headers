@@ -7,14 +7,10 @@ using Microsoft.Extensions.Primitives;
 
 namespace Jnz.RequestHeaderCorrelationId
 {
-    public class RequestHeaderCorrelationIdMiddleware
+    public class RequestHeaderCorrelationIdMiddleware(RequestDelegate next)
     {
-        public RequestHeaderCorrelationIdMiddleware(RequestDelegate next)
-        {
-            Next = next;
-        }
         private const string CorrelationTokenHeader = "x-correlation-id";
-        public RequestDelegate Next { get; }
+        public RequestDelegate Next { get; } = next;
         public ILogger<RequestHeaderCorrelationIdMiddleware> Logger { get; }
 
 

@@ -9,17 +9,12 @@ using Microsoft.Extensions.Primitives;
 
 namespace Jnz.RequestHeaderCorrelationId
 {
-    public class HttpClientRequestHeadersHandler : DelegatingHandler
+    public class HttpClientRequestHeadersHandler(IHttpContextAccessor httpContextAccessor) : DelegatingHandler
     {
-        public HttpClientRequestHeadersHandler(IHttpContextAccessor httpContextAccessor)
-        {
-            this._httpContextAccessor = httpContextAccessor;
-        }
-
         private const string CorrelationIdHeader = "x-correlation-id";
         private const string UserAgentHeader = "User-Agent";
         private const string ApplicationNameEnvironment = "ApplicationName";
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
         private static string ApplicationName => Environment.GetEnvironmentVariable(ApplicationNameEnvironment) ??
             Environment.MachineName;
 
